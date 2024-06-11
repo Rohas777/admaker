@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Bicubik';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src:    url('./bicubik/bicubik.woff2') format('woff2'), 
+            url('./bicubik/bicubik.woff') format('woff');
+}
