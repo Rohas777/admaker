@@ -826,6 +826,7 @@ h6 {
     display: flex;
     align-items: center;
     border-right: 1px solid #ff3535;
+    cursor: pointer;
 }
 .offers__form-item:last-of-type {
     border: none;
@@ -2361,21 +2362,18 @@ h6 {
     width: 100%;
     min-height: 433px;
     color: #fff;
+    padding-bottom: 46px;
 }
 
 .footer__block {
     display: flex;
-    height: 336px;
-}
-
-.footer__logo-block {
-    max-width: 252px;
 }
 
 .footer__image {
     object-fit: contain;
     margin-bottom: 14px;
     width: 100%;
+    max-width: 252px;
     cursor: pointer;
 }
 
@@ -2383,20 +2381,21 @@ h6 {
     color: #d9d9d9;
     margin: 0;
     padding: 0;
+    font-size: clamp(11px, 1.6vw, 14px);
     width: 100%;
+    margin-bottom: 10px;
 }
 
 .footer__button {
     background-color: #6c6c6c;
     color: #fff;
-    min-height: 49px;
     border-radius: 21px;
-    /* max-width: 252px; */
-    width: 100%;
     text-transform: uppercase;
+    padding: 16px 19px;
     font-size: 15px;
     margin-top: 22px;
     cursor: pointer;
+    font-size: clamp(11px, 3vw, 16px);
 }
 
 .footer__list {
@@ -2423,13 +2422,14 @@ h6 {
 }
 
 .footer__list-main-block {
-    max-width: 990px;
-    width: 100%;
     min-height: 336px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-left: 66px;
+    flex-grow: 1;
+    gap: 40px;
+    flex-wrap: wrap;
 }
 
 .footer__contacts-socials-block {
@@ -2439,7 +2439,11 @@ h6 {
 }
 
 .footer__contacts-socials-block-inner {
-    display: none;
+    display: flex;
+    gap: 20px;
+    justify-content: end;
+    padding: 0 20px;
+    flex-wrap: wrap;
 }
 
 .footer__contacts-list-item-socials {
@@ -2448,17 +2452,15 @@ h6 {
     gap: 10px;
 }
 
-.footer__contacts-list-item-socials-button {
-    background-color: transparent;
-    max-width: 52px;
-    width: 100%;
-    height: 100%;
+.footer__contacts-list-item-socials p {
+    font-size: 16px;
 }
 
-.footer__contacts-list-block-main {
-    max-width: 297px;
+.footer__contacts-list-item-socials-button {
+    background-color: transparent;
+    max-width: clamp(31px, 7vw, 52px);
     width: 100%;
-    min-height: 336px;
+    height: 100%;
 }
 
 @media screen and (max-width: 1335px) {
@@ -3049,56 +3051,15 @@ h6 {
     }
 
     .footer__list-item:first-child {
-        font-size: 16px;
         margin-bottom: 24px;
     }
 
     .footer__list-item {
-        font-size: 11px;
         margin-bottom: 27px;
-    }
-
-    .footer__logo-block {
-        max-width: 174px;
-        width: 100%;
-    }
-
-    .footer__image {
-        max-width: 132px;
-        width: 100%;
-        min-height: 89px;
-        margin: 0;
-    }
-
-    .footer__copyright {
-        font-size: 11px;
-        margin: 20px 0 14px;
-    }
-
-    .footer__button {
-        width: 100%;
-        min-height: 36px;
-        font-size: 10px;
-        margin: 0;
-    }
-
-    .footer__contacts-list-block-main {
-        max-width: 188px;
-        width: 100%;
     }
 
     .footer__contacts-socials-block {
         margin-top: 30px;
-    }
-
-    .footer__contacts-list-item-socials img {
-        max-width: 31px;
-        width: 100%;
-        min-height: 31px;
-    }
-
-    .footer__contacts-list-item-socials p {
-        font-size: 10px;
     }
 }
 @media screen and (max-width: 992px) {
@@ -3124,6 +3085,19 @@ h6 {
     }
     .tariffs__wrapper {
         margin-top: 120px;
+    }
+    .footer__block {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .footer__list {
+        flex-grow: 1;
+    }
+}
+@media screen and (min-width: 785px) {
+    .feed-back__question-answer-mobile,
+    .feed-back__question-form-mobile {
+        display: none !important;
     }
 }
 @media screen and (max-width: 784px) {
@@ -3658,6 +3632,50 @@ h6 {
     }
 
     /* ----- Блок с собратной связью ---- */
+    .feed-back .container {
+        padding: 0 20px;
+    }
+    .feed-back__questions-block {
+        max-width: none;
+    }
+    .feed-back__question-item,
+    .feed-back__question-another {
+        max-width: clamp(233px, 59vw, 90%);
+        margin: 0px auto 10px;
+        display: flex;
+    }
+    .feed-back__question-answer-mobile,
+    .feed-back__question-form-mobile {
+        background-color: #f0f0f0;
+        border: 1px solid #000000;
+        border-radius: 20px;
+        padding: 26px 10px 35px;
+        margin-bottom: 10px;
+        display: none;
+    }
+    .feed-back__question-answer-mobile:first-of-type {
+        display: block;
+    }
+    .feed-back__question-form-mobile button {
+        top: calc(100% + 50px);
+    }
+    .feed-back__question-form-mobile label p {
+        font-size: 16px;
+    }
+    .feed-back-quest-answ.form-opened {
+        padding-bottom: 70px;
+    }
+    .feed-back__question-answer-mobile p {
+        width: clamp(222px, 59vw, 90%);
+        margin: 0px auto;
+        margin-bottom: 10px;
+    }
+    .feed-back__question-answer-mobile p:last-of-type {
+        margin-bottom: 0;
+    }
+    .feed-back__answer-block {
+        display: none;
+    }
     .feed-back-quest-answ {
         flex-direction: column;
     }
@@ -3682,86 +3700,32 @@ h6 {
     }
 
     /* ---------- Подвал ----------- */
-    .footer {
-        padding: 32px 0 0 0;
-        min-height: 241px;
-    }
 
-    .footer__block {
-        height: 179px;
+    .footer .container {
+        padding: 0 20px;
     }
-
-    .footer__logo-block {
-        max-width: 100px;
-        width: 100%;
-    }
-
     .footer__contacts-socials-block-inner {
         display: flex;
-        margin: 15px 0 0 0;
-        justify-content: space-between;
+        margin: 25px 0 0 0;
+        justify-content: start;
+        padding: 0;
     }
 
     .footer__contacts-socials-block {
         display: none;
     }
 
-    .footer__list-item:first-child {
-        margin-bottom: 10px;
-        font-size: 12px;
-    }
-
-    .footer__image {
-        max-width: 67px;
-        width: 100%;
-        min-height: 44px;
-    }
-
-    .footer__copyright {
-        font-size: 6px;
-        margin: 10px 0;
-    }
-
-    .footer__button {
-        max-width: 89px;
-        min-height: 16px;
-        font-size: 5px;
-    }
-
     .footer__contacts-list-item-socials {
-        gap: 3px;
         min-height: 14px;
         align-items: flex-end;
     }
 
     .footer__list-item {
         margin-bottom: 15px;
-        font-size: 7px;
-        line-height: 8.53px;
-    }
-
-    .footer__contacts-list-item-socials img {
-        max-width: 14px;
-        width: 100%;
-        padding: 0;
-        margin: 0;
-        min-height: 14px;
-    }
-
-    .footer__contacts-list-item-socials p {
-        font-size: 6px;
     }
 
     .footer__list-main-block {
-        margin-left: 15px;
-        min-height: auto;
-    }
-
-    .footer__menu-list,
-    .footer__services-list,
-    .footer__contacts-list-block-main {
-        max-width: 78px;
-        min-height: 179px;
+        margin-left: 0;
     }
 }
 @media screen and (max-width: 472px) {

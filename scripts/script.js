@@ -102,7 +102,8 @@ $(document).ready(function () {
     $(".feed-back__question-item").click(function (e) {
         e.preventDefault();
         if ($(this).hasClass("active")) return;
-        const index = $(this).index();
+        const index = $(this).index() ? $(this).index() / 2 : $(this).index();
+        console.log(index);
 
         if ($(".feed-back-quest-answ").hasClass("form-opened")) {
             $(".feed-back-quest-answ").removeClass("form-opened");
@@ -124,7 +125,10 @@ $(document).ready(function () {
             ".feed-back__question-item, .feed-back__question-another"
         ).removeClass("active");
         $(this).addClass("active");
+        $(".feed-back__question-answer-mobile").slideUp(400);
         $(".feed-back__answer-text").slideUp(400);
+        $(".feed-back__question-form-mobile").slideUp(400);
+        $(this).next(".feed-back__question-answer-mobile").slideDown(400);
         setTimeout(function () {
             $(".feed-back__answer-text").html(answers[index]).slideDown(400);
         }, 400);
@@ -139,6 +143,8 @@ $(document).ready(function () {
 
         $(".feed-back-quest-answ").addClass("form-opened");
         $(".feed-back__answer-content").css("flexGrow", 0).slideUp(400);
+        $(".feed-back__question-answer-mobile").slideUp(400);
+        $(".feed-back__question-form-mobile").slideDown(400);
         setTimeout(function () {
             $(".feed-back__answer-form").slideDown(400).animate({
                 flexGrow: 1,
