@@ -151,31 +151,243 @@ $(document).ready(function () {
             });
         }, 400);
     });
+
+    function openQuizMessage(message) {
+        const quizMessage = $(".conversion .message");
+        quizMessage
+            .text(
+                "Вам необходимо ответить на все вопросы, чтобы получить подарок."
+            )
+            .slideDown(400);
+        $(".conversion__text-button-block").animate(
+            {
+                paddingBottom: 80,
+            },
+            400
+        );
+    }
+    function closeQuizMessage() {
+        const quizMessage = $(".conversion .message");
+        quizMessage.text("").slideUp(400);
+        $(".conversion__text-button-block").animate(
+            {
+                paddingBottom: 0,
+            },
+            400
+        );
+    }
+    $(".conversion__question")
+        .not(".conversion__question_end")
+        .each(function () {
+            const circle = $("<div></div>").addClass(
+                "conversion__form-circules-item"
+            );
+            $(".conversion__form-circules").append(circle);
+        });
+    $(".conversion__total").text(
+        $(".conversion__question").not(".conversion__question_end").length
+    );
+    $(".conversion__questions span").text("7 вопросов");
+
+    $(".conversion__btn").click(function () {
+        const questionContainer = $(this).closest(".conversion__question");
+
+        if (questionContainer.hasClass("active")) return;
+
+        closeQuizMessage();
+
+        $(".conversion__question")
+            .not(questionContainer)
+            .removeClass("active")
+            .slideUp(400);
+
+        questionContainer.addClass("active");
+        questionContainer.find(".conversion__answers").slideDown(400);
+
+        $(".conversion__question")
+            .not(questionContainer)
+            .find(".conversion__close")
+            .fadeOut(400);
+        $(".conversion__question")
+            .not(questionContainer)
+            .find(".conversion__open")
+            .fadeIn(400);
+
+        questionContainer.find(".conversion__open").fadeOut(400);
+        questionContainer.find(".conversion__close").fadeIn(400);
+
+        $(".conversion__form-inputs").animate({
+            height: questionContainer
+                .find(".conversion__answers")
+                .innerHeight(),
+        });
+    });
+
+    $(".conversion__close").click(function () {
+        const questionContainer = $(this).closest(".conversion__question");
+
+        if (!questionContainer.hasClass("active")) return;
+
+        $(".conversion__question").slice(4).slideUp(400);
+        $(".conversion__question").slice(0, 4).slideDown(400);
+
+        questionContainer.find(".conversion__answers").slideUp(400);
+
+        questionContainer.find(".conversion__open").fadeIn(400);
+        questionContainer.find(".conversion__close").fadeOut(400);
+
+        setTimeout(function () {
+            questionContainer.removeClass("active");
+        }, 200);
+
+        $(".conversion__form-inputs").animate({
+            height: $(".conversion__form").innerHeight(),
+        });
+    });
+
+    $(".conversion__answers label").click(function () {
+        const questionContainer = $(this).closest(".conversion__question");
+        const questionsCount = $(".conversion__question").not(
+            ".conversion__question_end"
+        ).length;
+        const questionIndex = questionContainer.index();
+        closeQuizMessage();
+
+        questionContainer.addClass("checked");
+        $(".conversion__form-circules-item")
+            .eq(questionIndex)
+            .addClass("checked");
+        $(".conversion__current").text(
+            $(".conversion__question.checked").length
+        );
+        const questionsLeft =
+            $(".conversion__question").not(".conversion__question_end").length -
+            $(".conversion__question.checked").length;
+
+        if (questionsLeft) {
+            const questionsLeftStr = `${questionsLeft} ${
+                questionsLeft > 4
+                    ? "вопросов"
+                    : questionsLeft > 1
+                    ? "вопроса"
+                    : "вопрос"
+            }`;
+            $(".conversion__questions span").text(questionsLeftStr);
+        } else {
+            $(".conversion__questions").fadeOut(400);
+        }
+
+        if ($(".conversion__question.checked").length === questionsCount) {
+            questionContainer.addClass("checked");
+            $(".conversion__form").addClass("full-checked");
+        }
+    });
+
+    $(".conversion__next").click(function (e) {
+        e.preventDefault();
+        const questionContainer = $(this).closest(".conversion__question");
+        const nextQuestionContainer = questionContainer.next(
+            ".conversion__question"
+        );
+        const questionsCount = $(".conversion__question").not(
+            ".conversion__question_end"
+        ).length;
+        if (
+            !$(".conversion__form").hasClass("full-checked") &&
+            $(".conversion__next").index(this) + 1 === questionsCount
+        ) {
+            return;
+        }
+
+        closeQuizMessage();
+        nextQuestionContainer
+            .slideDown(400)
+            .addClass("active")
+            .find(".conversion__answers")
+            .slideDown(400);
+
+        questionContainer.find(".conversion__answers").slideUp(400);
+        questionContainer.removeClass("active").slideUp(400);
+
+        nextQuestionContainer.find(".conversion__close").fadeIn(400);
+        nextQuestionContainer.find(".conversion__open").fadeOut(400);
+
+        questionContainer.find(".conversion__open").fadeIn(400);
+        questionContainer.find(".conversion__close").fadeOut(400);
+
+        $(".conversion__form-inputs").animate({
+            height: nextQuestionContainer
+                .find(".conversion__answers")
+                .innerHeight(),
+        });
+    });
+
+    $(".conversion__button-start").click(function () {
+        const questionContainer = $(".conversion__question").eq(0);
+
+        if ($(".conversion__question").hasClass("active")) return;
+        closeQuizMessage();
+        $(".conversion__question")
+            .not(questionContainer)
+            .removeClass("active")
+            .slideUp(400);
+
+        questionContainer.addClass("active");
+        questionContainer.find(".conversion__answers").slideDown(400);
+
+        $(".conversion__question")
+            .not(questionContainer)
+            .find(".conversion__close")
+            .fadeOut(400);
+        $(".conversion__question")
+            .not(questionContainer)
+            .find(".conversion__open")
+            .fadeIn(400);
+
+        questionContainer.find(".conversion__open").fadeOut(400);
+        questionContainer.find(".conversion__close").fadeIn(400);
+
+        $(".conversion__form-inputs").animate({
+            height: questionContainer
+                .find(".conversion__answers")
+                .innerHeight(),
+        });
+
+        $("body, html").animate(
+            {
+                scrollTop: $(".conversion__form").offset().top - 100,
+            },
+            500
+        );
+    });
+
+    $(".conversion__button").click(function () {
+        if (!$(".conversion__form").hasClass("full-checked")) {
+            openQuizMessage(
+                "Вам необходимо ответить на все вопросы, чтобы получить подарок."
+            );
+            return;
+        }
+    });
+
+    function openPopup(popup) {
+        popup.fadeIn(400);
+        $(".overlay").fadeIn(400);
+        $("html, body").addClass("hidden");
+    }
+    function closePopup(popup) {
+        popup.fadeOut(400);
+        $(".overlay").fadeOut(400);
+        $("html, body").removeClass("hidden");
+    }
+
+    $(".service-popup-link").click(function (e) {
+        e.preventDefault();
+
+        openPopup($(".service-popup"));
+    });
+
+    $(".service-popup__close").click(function () {
+        closePopup($(".service-popup"));
+    });
 });
-
-// $(document).ready(function(){
-//   $(".owl-carousel").owlCarousel({
-//     items: 1,
-//     loop: true,
-//     margin: 10,
-//     autoplay: true,
-//     autoplayTimeout: 4000,
-//     autoplayHoverPause: true
-//   });
-// });
-
-// const swiper = new swiper('.intro__block-slider', {
-// Optional parameters
-// loop: true,
-
-// If we need pagination
-// pagination: {
-//   el: '.intro__block-slider .swiper-pagination',
-// },
-
-// Navigation arrows
-//   navigation: {
-//     nextEl: '.intro__block-slider .swiper-button-next',
-//     prevEl: '.intro__block-slider .swiper-button-prev',
-//   },
-// });
