@@ -390,4 +390,13 @@ $(document).ready(function () {
     $(".service-popup__close").click(function () {
         closePopup($(".service-popup"));
     });
+    $(".callback-popup-link").click(function (e) {
+        e.preventDefault();
+
+        openPopup($(".callback-popup"));
+    });
+
+    $(".callback-popup__close").click(function () {
+        closePopup($(".callback-popup"));
+    });
 });
