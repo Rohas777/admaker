@@ -368,6 +368,10 @@ $(document).ready(function () {
             );
             return;
         }
+
+        const presentationUrl = ""; // Получать из ответа на ajax-форму
+
+        window.open(presentationUrl, "_blank");
     });
 
     function openPopup(popup) {
